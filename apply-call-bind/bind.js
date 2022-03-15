@@ -4,18 +4,24 @@
  */
 
 Function.prototype._bind = function (ctx, ...args) {
+  const o = ctx == undefined ? window : Object(ctx);
+  const key = Symbol();
+  o[key] = this;
+
   const self = this;
 
-  const newFn = function (...rest) {
-    return self.call(ctx, ...args, ...rest);
+  const result = function (...innerArgs) {
+    if (this instanceof self) {
+      this[key] = _this;
+      this[key](...[...args, ...innerArgs]);
+    } else {
+      o[key](...[...args, ...innerArgs]);
+    }
   };
 
-  if (self.prototype) {
-    // 复制原函数的 prototype 给 newFn 一些情况下函数没有 prototype，比如箭头函数
-    newFn.prototype = Object.create(self.prototype);
-  }
-
-  return newFn;
+  // 如果绑定的是构造函数 那么需要继承构造函数原型属性和方法
+  result.prototype = Object.create(this.prototype);
+  return result;
 };
 
 const foo = {
@@ -29,4 +35,4 @@ function bar(name, age) {
 }
 
 var bindFoo = bar.bind(foo, "5c24");
-bindFoo("18");
+bindFoo(18);
