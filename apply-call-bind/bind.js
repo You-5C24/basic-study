@@ -11,8 +11,8 @@ Function.prototype._bind = function (ctx, ...args) {
   };
 
   if (self.prototype) {
-    // 复制源函数的prototype给newFn 一些情况下函数没有prototype，比如箭头函数
-    newFn.prototype = Object.create(_self.prototype);
+    // 复制原函数的 prototype 给 newFn 一些情况下函数没有 prototype，比如箭头函数
+    newFn.prototype = Object.create(self.prototype);
   }
 
   return newFn;
