@@ -95,3 +95,33 @@ console.log(myInstanceof([1, 2, 3], Array));
  * 假值 undefined null false +0 -0 NaN ""
  * 其余都是真值
  */
+
+// js 中如何进行隐式类型转换
+/**
+ * 每个值都隐含的自带 ToPrimitive 方法，用来将值转为基本类型值
+ * ToPrimitive(obj, type)
+ * Date 对象:  type 默认为 stirng  obj.toString().valueOf()
+ * 其余: type 默认为 number  obj.valueOf().toString()
+ *
+ * 操作符 隐式转换
+ * + : 两边至少有一个 string -> 转为 string，否则转为 number
+ * - * / : 转为 number
+ * < > :
+ *  基本类型比较: 两边都是字符串，比较字母表顺序。 否则转为 number 再比较
+ *  对象比较: eg. var a = {};  a > 2;    a.valueOf() -> a.toString() -> Number(a.toString())
+ *
+ *
+ * + 操作符什么时候用于拼接
+ * 两边至少有一个是 string
+ */
+
+// || 和 && 操作符的返回值
+/**
+ * || : 第一个操作数的判断条件是真就返回第一个，否则返回第二个
+ * && : 第一个操作数的判断条件是真就返回第二个，否则返回第一个
+ */
+
+// 什么是 js 包装类
+/**
+ * 调用基本类型的属性或方法时，隐式的将基本类型的值转为对象  '123'.length -> String('123').length
+ */
