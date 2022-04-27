@@ -96,20 +96,81 @@
 /**
  * 面试题3
  */
-function Person(name, age) {
+// function Person(name, age) {
+//   this.name = name;
+//   this.age = age;
+//   this.eat = function () {
+//     console.log(age + "岁的" + name + "在吃饭。");
+//   };
+// }
+
+// Person.run = function () {};
+// Person.prototype.walk = function () {};
+
+// let p1 = new Person("jsliang", 24);
+// let p2 = new Person("jsliang", 24);
+
+// console.log(p1.eat === p2.eat);
+// console.log(p1.run === p2.run);
+// console.log(p1.walk === p2.walk);
+
+/**
+ * 原型的修改与重写
+ */
+// function Person(name) {
+//   this.name = name;
+// }
+
+// let p = new Person("5c24");
+
+// Person.prototype.getName = function () {
+//   console.log(this.name);
+// };
+
+// p.getName();
+// console.log(`update: ${p.constructor === Person}`);
+
+// Person.prototype = {
+//   coverName: function () {
+//     console.log(`cover: ${this.name}`);
+//   },
+// };
+
+// let p2 = new Person("you");
+// p2.coverName();
+
+// console.log(p.constructor === p2.constructor);
+
+// let p3 = new Person("You_5c24");
+// Person.prototype.newFun = function () {
+//   console.log(`test`);
+// };
+
+// console.log(p2.constructor === p3.constructor);
+// p2.newFun();
+// p3.coverName();
+// p3.newFun();
+
+function Person(name) {
   this.name = name;
-  this.age = age;
-  this.eat = function () {
-    console.log(age + "岁的" + name + "在吃饭。");
-  };
 }
+// 修改原型
+Person.prototype.getName = function () {};
+var p = new Person("hello");
+console.log(p.__proto__ === Person.prototype); // true
+console.log(p.__proto__ === p.constructor.prototype); // true
+// 重写原型
+Person.prototype = {
+  getName: function () {},
+};
+var p = new Person("hello");
+console.log(p.__proto__ === Person.prototype); // true
+console.log(p.__proto__ === p.constructor.prototype); // false
 
-Person.run = function () {};
-Person.prototype.walk = function () {};
-
-let p1 = new Person("jsliang", 24);
-let p2 = new Person("jsliang", 24);
-
-console.log(p1.eat === p2.eat);
-console.log(p1.run === p2.run);
-console.log(p1.walk === p2.walk);
+// Person.prototype = {
+//   getName: function() {}
+// }
+// var p = new Person('hello')
+// p.constructor = Person
+// console.log(p.__proto__ === Person.prototype)        // true
+// console.log(p.__proto__ === p.constructor.prototype) // true
